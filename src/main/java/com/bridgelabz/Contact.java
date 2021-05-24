@@ -1,9 +1,9 @@
 package com.bridgelabz;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
     public class Contact {
-
         private String firstName;
         private String lastName;
         private String address;
@@ -12,9 +12,11 @@ import java.util.Objects;
         private String zip;
         private String phoneNo;
         private String email;
+        private LocalDate date;
+        private String name;
+        private String type;
 
         public Contact() {
-
         }
 
         public Contact(String firstName, String lastName, String address, String city, String state, String zip,
@@ -28,6 +30,14 @@ import java.util.Objects;
             this.zip = zip;
             this.phoneNo = phoneNo;
             this.email = email;
+        }
+
+        public Contact(String firstName,String lastName,String address,String city,
+                       String state,String zip,String phone,String email,LocalDate date,String name,String type) {
+            this(firstName,lastName,address,city,state,zip,phone,email);
+            this.date = date;
+            this.name = name;
+            this.type = type;
         }
 
         public String getFirstName() {
@@ -94,11 +104,42 @@ import java.util.Objects;
             this.email = email;
         }
 
+        public LocalDate getDate() {
+            return date;
+        }
+
+        public void setDate(LocalDate date) {
+            this.date = date;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(firstName,lastName);
+        }
+
+        @Override
         public String toString() {
-            return "First name=" + firstName + ",Last name=" + lastName + ",Address=" + address + ",City=" + city + ",State=" + state + ",Zip=" + zip + ",Phone No="
+            return "First name="+firstName + ",Last name=" + lastName + ",Address=" + address + ",City=" + city + ",State=" + state + ",Zip=" + zip + ",Phone No="
                     + phoneNo + ",Email=" + email + "\n";
         }
 
+        @Override
         public boolean equals(Object o) {
             Contact contact = (Contact) o;
             if ((this.firstName).equals(contact.firstName) && (this.lastName.equals(contact.lastName)))

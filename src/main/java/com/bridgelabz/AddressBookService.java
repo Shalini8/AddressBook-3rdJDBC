@@ -1,6 +1,7 @@
 package com.bridgelabz;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +45,27 @@ public class AddressBookService {
                            String zip, String phone, String email, LocalDate date, String name, String type) {
         addressBookList.add(addressBookDBService.addContact(firstName,lastName,address,city,state,zip,phone,email,date,name,type));
     }
-
-
+    public void addContacts(List<Contact> addContactList) {
+        Map<Integer,Boolean> additionStatus = new HashMap<Integer, Boolean>();
+        addContactList.forEach(contact -> {
+            Runnable task = () -> {
+                additionStatus.put(contact.hashCode(), false);
+                System.out.println("Contact being added:(threads) "+Thread.currentThread().getName());
+                this.addContact(contact.getFirstName(),contact.getLastName(),contact.getAddress(),contact.getCity(),contact.getState(),
+                        contact.getZip(),contact.getPhoneNo(),contact.getEmail(),contact.getDate(),contact.getName(),contact.getType());
+                additionStatus.put(contact.hashCode(), true);
+                System.out.println("Contact added: (threads)"+Thread.currentThread().getName());
+            };
+            Thread thread = new Thread(task,contact.getFirstName());
+            thread.start();
+        });
+        while(additionStatus.containsValue(false)) {
+            try {
+                Thread.sleep(10);
+            }catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(addressBookList);
+    }
 }
