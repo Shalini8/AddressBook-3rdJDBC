@@ -6,13 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddressBookDBService {
     private static AddressBookDBService addressBookDBService;
     private PreparedStatement addressBookPreparedStatement;
 
     private AddressBookDBService() {
+    }
+    public enum CountType{
+        CITY,STATE
     }
 
     public static AddressBookDBService getInstance() {
@@ -94,6 +99,32 @@ public class AddressBookDBService {
             e.printStackTrace();
         }
         return contactList;
+    }
+    public Map<String,Integer> getCountByCityState(CountType type) {
+        String sql = null;
+        Map<String,Integer> countMap = new HashMap<String,Integer>();
+        if(type.equals(CountType.CITY))
+            sql = "SELECT COUNT(email),city from address_book GROUP BY city;";
+        else if(type.equals(CountType.STATE))
+            sql = "SELECT COUNT(email),state from address_book GROUP BY state;";
+        try(Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()) {
+                String entry = null;
+                int count = resultSet.getInt("COUNT(email)");
+                if(type.equals(CountType.CITY)) {
+                    entry = resultSet.getString("city");
+                }
+                else if(type.equals(CountType.STATE)) {
+                    entry = resultSet.getString("state");
+                }
+                countMap.put(entry,count);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return countMap;
     }
 
     private Connection getConnection() throws SQLException {
