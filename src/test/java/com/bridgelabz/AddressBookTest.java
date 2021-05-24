@@ -3,6 +3,7 @@ package com.bridgelabz;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -45,5 +46,11 @@ public class AddressBookTest {
         int stateCount = stateMap.get("Chhattisgarh");
         boolean isValid = cityCount == 1 && stateCount == 2;
         assertTrue(isValid);
+    }
+    @Test
+    public void givenAContact_WhenAdded_ShouldSyncWithDatabase() {
+        addressBookService.readData();
+        addressBookService.addContact("Shalini", "Pandey", "Asna", "jagdalpur", "Gujrat", "456789", "9191902020",
+                "shalu@email.com", LocalDate.now(),"name","Family");
     }
 }

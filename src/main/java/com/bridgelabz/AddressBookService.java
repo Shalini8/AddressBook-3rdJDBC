@@ -1,5 +1,6 @@
 package com.bridgelabz;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,10 @@ public class AddressBookService {
     }
     public Map<String,Integer> getCountByCityState(AddressBookDBService.CountType type) {
         return addressBookDBService.getCountByCityState(type);
+    }
+    public void addContact(String firstName, String lastName, String address, String city, String state,
+                           String zip, String phone, String email, LocalDate date, String name, String type) {
+        addressBookList.add(addressBookDBService.addContact(firstName,lastName,address,city,state,zip,phone,email,date,name,type));
     }
 
 

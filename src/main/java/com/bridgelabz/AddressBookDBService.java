@@ -1,10 +1,6 @@
 package com.bridgelabz;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,6 +121,21 @@ public class AddressBookDBService {
             e.printStackTrace();
         }
         return countMap;
+    }
+    public Contact addContact(String firstName, String lastName, String address, String city, String state, String zip,
+                              String phone, String email, LocalDate date, String name, String type) {
+        Contact contact = null;
+        try (Connection connection = this.getConnection()) {
+            String sql = String.format(
+                    "INSERT INTO address_book" + " VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                    firstName, lastName, address, city, state, zip, phone, email, Date.valueOf(date), name, type);
+            Statement statement = connection.createStatement();
+            int rowsAffected = statement.executeUpdate(sql);
+            contact = new Contact(firstName, lastName, address, city, state, zip, phone, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contact;
     }
 
     private Connection getConnection() throws SQLException {
