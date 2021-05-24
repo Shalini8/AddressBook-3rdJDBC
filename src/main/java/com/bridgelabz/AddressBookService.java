@@ -32,6 +32,9 @@ public class AddressBookService {
                 .orElse(null);
         return contactData;
     }
+    public List<Contact> getContactInDateRange(String start, String end) {
+        return addressBookDBService.getContactInDateRange(start,end);
+    }
 
 
 }

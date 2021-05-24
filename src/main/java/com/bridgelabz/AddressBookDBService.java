@@ -63,8 +63,18 @@ public class AddressBookDBService {
         }
         return contactList;
     }
-
-
+    public List<Contact> getContactInDateRange(String start, String end) {
+        List<Contact> contactList = new ArrayList<Contact>();
+        String sql = String.format("SELECT * FROM address_book where date BETWEEN '%s' AND '%s'",start,end);
+        try(Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            contactList = this.getDataUsingResultSet(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contactList;
+    }
     private List<Contact> getDataUsingResultSet(ResultSet resultSet){
         List<Contact> contactList = new ArrayList<Contact>();
         try {

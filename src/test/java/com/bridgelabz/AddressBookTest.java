@@ -27,5 +27,10 @@ public class AddressBookTest {
         boolean result = addressBookService.checkEmployeePayrollInSyncWithDB("Meena","rai");
         assertTrue(result);
     }
-
+    @Test
+    public void givenDateRange_ShouldRetrieveContactsInThatRange() {
+        addressBookService.readData();
+        List<Contact> contactList = addressBookService.getContactInDateRange("2020-01-01","2020-03-20");
+        assertEquals(2,contactList.size());
+    }
 }
