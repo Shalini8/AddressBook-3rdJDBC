@@ -1,22 +1,24 @@
 package com.bridgelabz;
 
+import java.util.Objects;
+
     public class Contact {
-        private int user_id;
+
         private String firstName;
         private String lastName;
         private String address;
         private String city;
         private String state;
-        private     int zip;
-        private Long phoneNo;
+        private String zip;
+        private String phoneNo;
         private String email;
 
         public Contact() {
 
         }
 
-        public Contact(int user_id, String firstName, String lastName, String address, String city, String state, int zip,
-                       long phoneNo, String email) {
+        public Contact(String firstName, String lastName, String address, String city, String state, String zip,
+                       String phoneNo, String email) {
             super();
             this.firstName = firstName;
             this.lastName = lastName;
@@ -26,13 +28,6 @@ package com.bridgelabz;
             this.zip = zip;
             this.phoneNo = phoneNo;
             this.email = email;
-        }
-        public int getUser_id() {
-            return user_id;
-        }
-
-        public void setUser_id(int user_id) {
-            this.user_id = user_id;
         }
 
         public String getFirstName() {
@@ -75,19 +70,19 @@ package com.bridgelabz;
             this.state = state;
         }
 
-        public int getZip() {
+        public String getZip() {
             return zip;
         }
 
-        public void setZip(int zip) {
+        public void setZip(String zip) {
             this.zip = zip;
         }
 
-        public  Long getPhoneNo() {
+        public String getPhoneNo() {
             return phoneNo;
         }
 
-        public void setPhoneNo(Long phoneNo) {
+        public void setPhoneNo(String phoneNo) {
             this.phoneNo = phoneNo;
         }
 
@@ -99,19 +94,16 @@ package com.bridgelabz;
             this.email = email;
         }
 
-
-        @Override
         public String toString() {
-            return "Contact{" +
-                    "user_id=" + user_id +
-                    ", firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", address='" + address + '\'' +
-                    ", city='" + city + '\'' +
-                    ", state='" + state + '\'' +
-                    ", zip=" + zip +
-                    ", phoneNo=" + phoneNo +
-                    ", email='" + email + '\'' +
-                    '}';
+            return "First name=" + firstName + ",Last name=" + lastName + ",Address=" + address + ",City=" + city + ",State=" + state + ",Zip=" + zip + ",Phone No="
+                    + phoneNo + ",Email=" + email + "\n";
+        }
+
+        public boolean equals(Object o) {
+            Contact contact = (Contact) o;
+            if ((this.firstName).equals(contact.firstName) && (this.lastName.equals(contact.lastName)))
+                return true;
+            else
+                return false;
         }
     }
