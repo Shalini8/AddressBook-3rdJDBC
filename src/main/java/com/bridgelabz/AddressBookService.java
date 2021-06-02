@@ -41,7 +41,7 @@ public class AddressBookService {
 
     }
 
-    private Contact getContactDetails(String firstName,String lastName) {
+    public Contact getContactDetails(String firstName,String lastName) {
         Contact contactData = this.addressBookList.stream()
                 .filter(employee->employee.getFirstName().equals(firstName)&&employee.getLastName().equals(lastName))
                 .findFirst()
@@ -81,7 +81,8 @@ public class AddressBookService {
         }
         System.out.println(addressBookList);
     }
-    public long countEntries() {
+    public long countEntries(IOService ioService) {
+
         return addressBookList.size();
     }
 

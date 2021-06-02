@@ -134,6 +134,7 @@ import java.util.Objects;
             this.type = type;
         }
 
+
         @Override
         public int hashCode() {
             return Objects.hash(firstName,lastName);
