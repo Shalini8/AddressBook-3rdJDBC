@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
     public class Contact {
+        private  int id;
         private String firstName;
         private String lastName;
         private String address;
@@ -38,6 +39,11 @@ import java.util.Objects;
             this.date = date;
             this.name = name;
             this.type = type;
+        }
+        public Contact(int id,String firstName,String lastName,String address,String city,
+                       String state,String zip,String phone,String email,LocalDate date,String name,String type) {
+            this(firstName,lastName,address,city,state,zip,phone,email,date,name,type);
+            this.id = id;
         }
 
         public String getFirstName() {
