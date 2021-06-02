@@ -104,6 +104,11 @@ public class AddressBookService {
         else if(ioService.equals(IOService.REST_IO)) {
             addressBookList.add(contact);
         }
-
+    }
+    public void deleteContactJSONServer(String firstName, String lastName, IOService ioService) {
+        if(ioService.equals(IOService.REST_IO)) {
+            Contact contactData = this.getContactDetails(firstName, lastName);
+            addressBookList.remove(contactData);
+        }
     }
 }
