@@ -33,7 +33,7 @@ public class AddressBookTest {
 
     @Test
     public void givenContactDetails_WhenUpdated_ShouldSyncWithDB() {
-        addressBookService.updateContact("Meena", "rai", "123456789", "meena@email.com");
+        addressBookService.updateContact("Meena", "rai", "123456789", "meena@email.com", AddressBookService.IOService.DB_IO);
         boolean result = addressBookService.checkEmployeePayrollInSyncWithDB("Meena", "rai");
         assertTrue(result);
     }
@@ -149,6 +149,21 @@ public class AddressBookTest {
         }
         long entries = addressBookService.countEntries(AddressBookService.IOService.REST_IO);
         assertEquals(7, entries);
+    }
+    @Test
+    public void givenNewContactData_WhenUpdated_ShouldMatch200Response() {
+        Contact[] arrayOfContacts = getContactList();
+        AddressBookService addressBookService = new AddressBookService(Arrays.asList(arrayOfContacts));
+        addressBookService.updateContact("Anil","Ambani","9876543210","anilambani@email.com", AddressBookService.IOService.REST_IO);
+        Contact contactData = addressBookService.getContactDetails("Anil","Ambani");
+        String contactJson = new Gson().toJson(contactData);
+        System.out.println(contactJson);
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        request.body(contactJson);
+        Response response = request.put("/contacts/" + contactData.getId());
+        int statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
     }
 }
 

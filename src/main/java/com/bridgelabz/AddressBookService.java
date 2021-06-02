@@ -27,13 +27,22 @@ public class AddressBookService {
         return addressBookList;
     }
 
-    public boolean updateContact(String firstName, String lastName, String phone, String email) {
-        int rows = addressBookDBService.updateContact(firstName,lastName,phone,email);
-        if(rows>0)
-            return true;
+    public boolean updateContact(String firstName, String lastName, String phone, String email,IOService ioService) {
+        if(ioService.equals(IOService.DB_IO)) {
+            int rows = addressBookDBService.updateContact(firstName,lastName,phone,email);
+            if(rows>0)
+                return true;
+        }
+        else if(ioService.equals(IOService.REST_IO)) {
+            Contact contactData = this.getContactDetails(firstName, lastName);
+            if(contactData!=null) {
+                contactData.setEmail(email);
+                contactData.setPhoneNo(phone);
+                return true;
+            }
+        }
         return false;
     }
-
     public boolean checkEmployeePayrollInSyncWithDB(String firstName, String lastName) {
         List<Contact> checkList = null;
          checkList = addressBookDBService.getContactDetailsDB(firstName,lastName);
